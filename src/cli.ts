@@ -1,31 +1,45 @@
-import { WordAnalyzer } from './wordHierarchy';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const args = process.argv.slice(2);
-const depthIndex = args.indexOf('--depth');
-const verbose = args.includes('--verbose');
-const phrase = args.find(arg => arg.startsWith('"'))?.replace(/"/g, '');
+yargs(hideBin(process.argv))
+  .command(
+    'analyze [phrase]',
+    'Analisar a frase fornecida',
+    (yargs) => {
+      return yargs
+        .positional('phrase', {
+          describe: 'Frase a ser analisada',
+          type: 'string',
+        })
+        .option('depth', {
+          alias: 'd',
+          type: 'number',
+          description: 'Nível de profundidade da árvore',
+          demandOption: true,
+        })
+        .option('verbose', {
+          alias: 'v',
+          type: 'boolean',
+          description: 'Mostra informações detalhadas',
+          default: false,
+        });
+    },
+    (argv) => {
+      if (!argv.phrase) {
+        console.error('Erro: nenhuma frase foi fornecida.');
+        process.exit(1);
+      }
 
-if (!phrase || depthIndex === -1 || !args[depthIndex + 1]) {
-  console.error('Erro: parâmetros incorretos.');
-  process.exit(1);
-}
+      const phrase = argv.phrase as string;
+      const depth = argv.depth as number;
+      const verbose = argv.verbose as boolean;
 
-const depth = parseInt(args[depthIndex + 1], 10);
+      console.log(`Frase: ${phrase}`);
+      console.log(`Profundidade: ${depth}`);
+      console.log(`Verbose: ${verbose}`);
 
-const analyzer = new WordAnalyzer();
-
-const startLoad = Date.now();
-const results = analyzer.analyze(phrase, depth);
-const endLoad = Date.now();
-
-if (Object.keys(results).length === 0) {
-  console.log('Nenhuma correspondência encontrada.');
-} else {
-  for (const [key, count] of Object.entries(results)) {
-    console.log(`${key} = ${count}`);
-  }
-}
-
-if (verbose) {
-  console.log(`Tempo de carregamento dos parâmetros: ${endLoad - startLoad}ms`);
-}
+    }
+  )
+  .help()
+  .alias('help', 'h')
+  .parse();
