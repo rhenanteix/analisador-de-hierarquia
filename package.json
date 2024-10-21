@@ -1,0 +1,28 @@
+{
+  "name": "@firedevbr/analisador-de-hierarquia",
+  "version": "1.0.0",
+  "description": "uma estrutura hierárquica de palavras onde cada palavra ou grupo de palavras pode ter subcategorias, semelhante a uma árvore de classificação",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhenanteix/analisador-de-hierarquia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rhenanteix/analisador-de-hierarquia/issues"
+  },
+  "homepage": "https://github.com/rhenanteix/analisador-de-hierarquia#readme",
+  "dependencies": {
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.7.7",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
